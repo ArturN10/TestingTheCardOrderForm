@@ -1,5 +1,6 @@
 package ru.netology.test;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,21 +8,26 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
 public class CardFormTest {
-    WebDriver driver;
+   private WebDriver driver;
 
     @BeforeAll
     static void setupAll() {
-        System.setProperty("webdriver.chrome.driver", "./driver/chromedriver.exe");
+        WebDriverManager.chromedriver().setup();
     }
 
+
     @BeforeEach
-    void setup() {
-        driver = new ChromeDriver();
+    public void setup() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--headless");
+        driver = new ChromeDriver(options);
     }
 
     @AfterEach
